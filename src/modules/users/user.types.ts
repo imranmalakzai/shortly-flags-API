@@ -17,4 +17,5 @@ export interface Users extends RowDataPacket {
   id: number;
   name: string;
   email: string;
+  password: string;
 }
