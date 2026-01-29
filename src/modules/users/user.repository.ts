@@ -33,3 +33,12 @@ export const user = async (userId: number): Promise<Users> => {
   ]);
   return rows[0];
 };
+
+// Delete a user
+export const remove = async (userId: number): Promise<number> => {
+  const [result] = await pool.query<ResultSetHeader>(
+    "DELETE FROM users WHERE id = ?",
+    userId,
+  );
+  return result.insertId;
+};
