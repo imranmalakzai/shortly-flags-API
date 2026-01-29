@@ -4,3 +4,9 @@ export interface person {
   email: string;
   password: string;
 }
+
+//change user password
+export interface password {
+  id: number;
+  password: string;
+}
