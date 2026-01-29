@@ -42,3 +42,12 @@ export const remove = async (userId: number): Promise<number> => {
   );
   return result.insertId;
 };
+
+// Get user by email
+export const getUserByEmail = async (email: string): Promise<Users> => {
+  const [rows] = await pool.query<Users[]>(
+    "SELECT * FROM users WHERE email = ?",
+    [email],
+  );
+  return rows[0];
+};
