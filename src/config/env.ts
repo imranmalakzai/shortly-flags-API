@@ -12,4 +12,5 @@ export const {
   REFRESH_TOKEN_EXPIRY,
   CORS_ORIGIN,
   REDIS_SERVER_URL,
+  DATABASE,
 } = process.env;
