@@ -1,5 +1,5 @@
 import { pool } from "../../infra/mysql";
-import { ResultSetHeader, RowDataPacket } from "mysql2";
+import { ResultSetHeader } from "mysql2";
 import { person, password as ps, Users } from "./user.types";
 
 // Register a new user
@@ -20,9 +20,8 @@ export const password = async (data: ps): Promise<number> => {
   return result.insertId;
 };
 
+// fetch all users
 export const users = async (): Promise<Users[]> => {
-  const [rows] = await pool.query<Users[] & ResultSetHeader>(
-    "SELECT id,name,email FROM users",
-  );
+  const [rows] = await pool.query<Users[]>("SELECT id,email,name FROM users");
   return rows;
 };
