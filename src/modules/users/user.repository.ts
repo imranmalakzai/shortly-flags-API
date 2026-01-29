@@ -25,3 +25,11 @@ export const users = async (): Promise<Users[]> => {
   const [rows] = await pool.query<Users[]>("SELECT id,email,name FROM users");
   return rows;
 };
+
+//Get a user by Id
+export const user = async (userId: number): Promise<Users> => {
+  const [rows] = await pool.query<Users[]>("SELECT * FROM users WHERE id = ", [
+    userId,
+  ]);
+  return rows[0];
+};
