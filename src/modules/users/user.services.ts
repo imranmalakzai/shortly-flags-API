@@ -48,3 +48,19 @@ export const user = async (userId: number): Promise<Users> => {
   const user = await db.user(userId);
   return user;
 };
+
+export const password = async (
+  userId: number,
+  newpassword: string,
+  oldPassword: string,
+): Promise<number> => {
+  const user = await db.user(userId);
+
+  //compare password
+  const isMatch = await bcrypt.compare(oldPassword, user.password);
+  if (!isMatch) throw new ApiError("Invalid old password", 400);
+
+  //result
+  const result = await db.password(newpassword, userId);
+  return result;
+};
