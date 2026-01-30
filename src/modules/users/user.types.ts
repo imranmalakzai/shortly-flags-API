@@ -18,4 +18,5 @@ export interface Users extends RowDataPacket {
   name: string;
   email: string;
   password: string;
+  role: "admin" | "owner" | "user";
 }
