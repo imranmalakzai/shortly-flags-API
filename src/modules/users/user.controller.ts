@@ -18,8 +18,14 @@ export const login = asycHandler(async (req, res) => {
   });
 });
 
-//get all users
+// Get all users
 export const users = asycHandler(async (req, res) => {
   const users = await services.users();
   res.status(200).json({ users });
+});
+
+// Get a user by id
+export const user = asycHandler(async (req, res) => {
+  const user = await services.user(req.body);
+  res.status(200).json({ user });
 });
