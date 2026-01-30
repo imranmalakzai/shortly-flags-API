@@ -44,3 +44,10 @@ export const remove = asycHandler(async (req, res) => {
   if (result === 0) throw new ApiError("Internal server error", 500);
   res.status(200).json({ message: "Account deleted successfully" });
 });
+
+// my profile
+export const me = asycHandler(async (req, res) => {
+  const me = await services.user(req.user.id);
+  if (!me) throw new ApiError("user not exist", 404);
+  res.status(200).json({ user: me });
+});
