@@ -3,6 +3,7 @@ import * as db from "./user.repository";
 import bcrypt from "bcrypt";
 import { person } from "./user.types";
 import { accessToken, refreshToken } from "../../infra/jwt";
+import { Users } from "./user.types";
 
 export const register = async (data: person): Promise<number> => {
   // user already exist
@@ -36,4 +37,9 @@ export const login = async (data: { email: string; password: string }) => {
 
   //add redis later here!! to handle refreshToken
   return { user, access_token, refresh_oken };
+};
+
+export const users = async (): Promise<Users[]> => {
+  const users = await db.users();
+  return users;
 };
