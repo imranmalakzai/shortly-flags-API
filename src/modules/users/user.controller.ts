@@ -26,7 +26,8 @@ export const users = asycHandler(async (req, res) => {
 
 // Get a user by id
 export const user = asycHandler(async (req, res) => {
-  const user = await services.user(req.body);
+  const { userId } = req.params;
+  const user = await services.user(Number(userId));
   res.status(200).json({ user });
 });
 
