@@ -12,10 +12,13 @@ export const register = async (user: person): Promise<number> => {
 };
 
 //update password
-export const password = async (data: ps): Promise<number> => {
+export const password = async (
+  password: string,
+  id: number,
+): Promise<number> => {
   const [result] = await pool.query<ResultSetHeader>(
     "UPDATE users SET password = ? WHERE id = ?",
-    [data.id, data.password],
+    [id, password],
   );
   return result.insertId;
 };
