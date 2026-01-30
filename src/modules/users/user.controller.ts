@@ -29,3 +29,11 @@ export const user = asycHandler(async (req, res) => {
   const user = await services.user(req.body);
   res.status(200).json({ user });
 });
+
+// update user password
+export const password = asycHandler(async (req, res) => {
+  const { newPassword, oldPassword } = req.body;
+  const result = await services.password(req.user.id, newPassword, oldPassword);
+  if (result === 0) throw new ApiError("Internal server error", 500);
+  res.status(200).json({ message: "password updated successfully" });
+});
