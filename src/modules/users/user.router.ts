@@ -7,4 +7,6 @@ const userRouter = express.Router();
 userRouter.route("/auth/register").post(users.register);
 userRouter.route("/auth/login").post(auth, users.login);
 
+userRouter.route("/users/me").get(auth, users.me);
+userRouter.route("/users/me").delete(auth, users.remove);
 userRouter.route("/users/me/password").patch(auth, users.password);
