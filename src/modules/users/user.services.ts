@@ -65,7 +65,7 @@ export const password = async (
   return result;
 };
 
-export const remove = async (userId: number) => {
+export const remove = async (userId: number): Promise<number> => {
   const result = await db.remove(userId);
   return result;
 };

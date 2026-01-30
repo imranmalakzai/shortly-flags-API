@@ -37,3 +37,10 @@ export const password = asycHandler(async (req, res) => {
   if (result === 0) throw new ApiError("Internal server error", 500);
   res.status(200).json({ message: "password updated successfully" });
 });
+
+// delete account
+export const remove = asycHandler(async (req, res) => {
+  const result = await services.remove(req.user.id);
+  if (result === 0) throw new ApiError("Internal server error", 500);
+  res.status(200).json({ message: "Account deleted successfully" });
+});
