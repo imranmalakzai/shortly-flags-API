@@ -43,3 +43,8 @@ export const users = async (): Promise<Users[]> => {
   const users = await db.users();
   return users;
 };
+
+export const user = async (userId: number): Promise<Users> => {
+  const user = await db.user(userId);
+  return user;
+};
