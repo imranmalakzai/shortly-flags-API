@@ -64,3 +64,8 @@ export const password = async (
   const result = await db.password(newpassword, userId);
   return result;
 };
+
+export const remove = async (userId: number) => {
+  const result = await db.remove(userId);
+  return result;
+};
