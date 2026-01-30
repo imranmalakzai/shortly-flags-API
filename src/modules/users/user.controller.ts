@@ -8,3 +8,14 @@ export const register = asycHandler(async (req, res) => {
   if (user === 0) throw new ApiError("Internal server error", 500);
   res.status(200).json({ message: "user registered successfully" });
 });
+
+// Login as existing account
+export const login = asycHandler(async (req, res) => {
+  const { user, access_token, refresh_oken } = await services.login(req.body);
+  res
+    .status(200)
+    .json({
+      accessToken: access_token,
+      user: { id: user.id, email: user.email, role: user.role },
+    });
+});
