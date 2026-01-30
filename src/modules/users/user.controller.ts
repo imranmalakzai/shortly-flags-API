@@ -12,10 +12,14 @@ export const register = asycHandler(async (req, res) => {
 // Login as existing account
 export const login = asycHandler(async (req, res) => {
   const { user, access_token, refresh_oken } = await services.login(req.body);
-  res
-    .status(200)
-    .json({
-      accessToken: access_token,
-      user: { id: user.id, email: user.email, role: user.role },
-    });
+  res.status(200).json({
+    accessToken: access_token,
+    user: { id: user.id, email: user.email, role: user.role },
+  });
+});
+
+//get all users
+export const users = asycHandler(async (req, res) => {
+  const users = await services.users();
+  res.status(200).json({ users });
 });
