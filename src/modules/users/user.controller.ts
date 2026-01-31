@@ -64,3 +64,10 @@ export const updateRole = asycHandler(async (req, res) => {
 
   res.status(200).json({ message: "user role updated successfully" });
 });
+
+// delete user account
+export const deleteUser = asycHandler(async (req, res) => {
+  const result = await services.remove(Number(req.params.userId));
+  if (result === 0) throw new ApiError("Internal server error", 500);
+  res.status(200).json({ message: "Account deleted successfully" });
+});
