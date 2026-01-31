@@ -1,12 +1,14 @@
 import z from "zod";
 
 export const register = z.object({
-  name: z.string("Name is required"),
-  email: z.string("Email is required").email("Invalid email address"),
-  password: z
-    .string("password is required")
-    .min(8, "Password must be at least 8 characters")
-    .max(100)
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number"),
+  body: z.object({
+    name: z.string("Name is required"),
+    email: z.string("Email is required").email("Invalid email address"),
+    password: z
+      .string("password is required")
+      .min(8, "Password must be at least 8 characters")
+      .max(100)
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number"),
+  }),
 });
