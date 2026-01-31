@@ -18,3 +18,7 @@ userRouter.route("/users/me/password").patch(auth, users.password);
 userRouter
   .route("/admin/users/:userId")
   .patch(auth, validRole("owner"), users.updateRole);
+
+userRouter
+  .route("/admin/users/:userId")
+  .delete(auth, validRole("owner", "admin"), users.deleteUser);
