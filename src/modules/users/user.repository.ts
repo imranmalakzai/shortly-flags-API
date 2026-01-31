@@ -46,10 +46,23 @@ export const remove = async (userId: number): Promise<number> => {
   return result.insertId;
 };
 
+// Get a user by email
 export const getUserByEmail = async (email: string): Promise<Users> => {
   const [rows] = await pool.query<Users[]>(
     "SELECT id,name,password,email,role FROM users WHERE email = ?",
     [email],
   );
   return rows[0];
+};
+
+// change user role
+export const updateuserRole = async (
+  role: "user" | "admin" | "owner",
+  userId: number,
+): Promise<number> => {
+  const [result] = await pool.query<ResultSetHeader>(
+    "UPDATE users SET role = ? WHERE id = ?",
+    [role, userId],
+  );
+  return result.affectedRows;
 };
