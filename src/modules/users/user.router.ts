@@ -2,10 +2,15 @@ import express from "express";
 import auth from "../../middlewares/auth";
 import * as users from "./user.controller";
 import { validRole } from "../../middlewares/validRole";
+import * as schema from "./user.schema";
+import validate from "../../middlewares/validate";
 
 const userRouter = express.Router();
 
-userRouter.route("/auth/register").post(users.register);
+userRouter
+  .route("/auth/register")
+  .post(validate(schema.register), users.register);
+
 userRouter.route("/auth/login").post(auth, users.login);
 
 userRouter.route("/users").get(auth, users.users);
