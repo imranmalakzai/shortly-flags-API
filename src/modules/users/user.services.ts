@@ -69,3 +69,11 @@ export const remove = async (userId: number): Promise<number> => {
   const result = await db.remove(userId);
   return result;
 };
+
+export const updateRole = async (
+  userId: number,
+  role: "user" | "admin" | "owner",
+) => {
+  const result = await db.updateuserRole(role, userId);
+  return result;
+};
