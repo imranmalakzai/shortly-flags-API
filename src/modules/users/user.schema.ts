@@ -12,3 +12,10 @@ export const register = z.object({
       .regex(/[0-9]/, "Password must contain at least one number"),
   }),
 });
+
+export const login = z.object({
+  body: z.object({
+    email: z.string("Email is required").email("Invalid email address"),
+    password: z.string("Password is required"),
+  }),
+});
