@@ -21,3 +21,15 @@ export const login = z.object({
       .min(3, "password much be more then 3 characters"),
   }),
 });
+
+export const password = z.object({
+  body: z.object({
+    oldPassword: z.string("old password is required"),
+    newPassword: z
+      .string("New password is required")
+      .min(8, "Password must be at least 8 characters")
+      .max(100)
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[0-9]/),
+  }),
+});
