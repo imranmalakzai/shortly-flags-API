@@ -11,7 +11,7 @@ userRouter
   .route("/auth/register")
   .post(validate(schema.register), users.register);
 
-userRouter.route("/auth/login").post(auth, users.login);
+userRouter.route("/auth/login").post(validate(schema.login), users.login);
 
 userRouter.route("/users").get(auth, users.users);
 userRouter.route("/users/:userId").get(users.user);

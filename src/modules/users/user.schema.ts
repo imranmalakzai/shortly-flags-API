@@ -16,6 +16,8 @@ export const register = z.object({
 export const login = z.object({
   body: z.object({
     email: z.string("Email is required").email("Invalid email address"),
-    password: z.string("Password is required"),
+    password: z
+      .string("Password is required")
+      .min(3, "password much be more then 3 characters"),
   }),
 });
