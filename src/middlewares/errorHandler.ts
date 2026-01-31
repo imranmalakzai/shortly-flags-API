@@ -22,6 +22,7 @@ const errorHandler = (
       return res.status(500).json({ message: err.message, success: false });
     }
 
+    // if err belongs to zod validation error
     if (err instanceof ZodError) {
       const apiError = zodErrorHandler(err);
       return res
