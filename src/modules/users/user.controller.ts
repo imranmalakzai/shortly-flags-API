@@ -52,3 +52,15 @@ export const me = asycHandler(async (req, res) => {
   if (!me) throw new ApiError("user not exist", 404);
   res.status(200).json({ user: me });
 });
+
+// update user role
+export const updateRole = asycHandler(async (req, res) => {
+  const { userId } = req.params;
+  const { role } = req.body;
+
+  //result
+  const result = await services.updateRole(Number(userId), role);
+  if (result === 0) throw new ApiError("Internal server error", 500);
+
+  res.status(200).json({ message: "user role updated successfully" });
+});
