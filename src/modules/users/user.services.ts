@@ -34,7 +34,10 @@ export const login = async (data: { email: string; password: string }) => {
   //check for attempt >= 5
   const attempts = await redis.get(key);
   if (attempts && Number(attempts) >= Max_attempts) {
-    throw new ApiError("Too many loggin attempts!,please try again later.");
+    throw new ApiError(
+      "Too many loggin attempts!,please try again later.",
+      429,
+    );
   }
 
   const user = await db.getUserByEmail(data.email);
