@@ -15,6 +15,11 @@ userRouter
 // login
 userRouter.route("/auth/login").post(validate(schema.login), users.login);
 
+//refresh token
+userRouter
+  .route("/auth/refresh")
+  .post(auth, validate(schema.refreshToken), users.refreshToken);
+
 // fetch all users
 userRouter.route("/users").get(auth, users.users);
 
