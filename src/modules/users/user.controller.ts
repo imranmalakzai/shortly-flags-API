@@ -85,4 +85,7 @@ export const refreshToken = asycHandler(async (req, res) => {
 });
 
 //logout
-export const logout = asycHandler(async (req, res) => {});
+export const logout = asycHandler(async (req, res) => {
+  const result = await services.logout(req.user.id);
+  res.status(200).json({ message: "logged out" });
+});
