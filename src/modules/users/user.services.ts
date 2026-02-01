@@ -29,7 +29,7 @@ export const login = async (data: { email: string; password: string }) => {
 
   const Max_attempts = 5;
   const Lock_time = 15 * 60;
-  const key = `Login_attep:${data.email}`;
+  const key = `Login_attempt:${data.email}`;
 
   //check for attempt >= 5
   const attempts = await redis.get(key);
