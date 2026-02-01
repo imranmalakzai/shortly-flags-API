@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { person } from "./user.types";
 import { accessToken, refreshToken } from "../../infra/jwt";
 import { Users } from "./user.types";
+import { getRedis } from "../../infra/redis";
 
 export const register = async (data: person): Promise<number> => {
   // user already exist
@@ -24,12 +25,31 @@ export const register = async (data: person): Promise<number> => {
 
 export const login = async (data: { email: string; password: string }) => {
   //user exist
+  const redis = getRedis();
+
+  const Max_attempts = 5;
+  const Lock_time = 15 * 60;
+  const key = `Login_attep:${data.email}`;
+
+  //check for attempt >= 5
+  const attempts = await redis.get(key);
+  if (attempts && Number(attempts) >= Max_attempts) {
+    throw new ApiError("Too many loggin attempts!,please try again later.");
+  }
+
   const user = await db.getUserByEmail(data.email);
   if (!user) throw new ApiError("Invalid cridential", 403);
 
   //match password
   const isMatch = await bcrypt.compare(data.password, user.password);
-  if (!isMatch) throw new ApiError("Invalid cridential", 403);
+  if (!isMatch) {
+    await redis.incr(key);
+    await redis.expire(key, Lock_time);
+    throw new ApiError("Invalid cridential", 403);
+  }
+
+  //delete redis key
+  await redis.del(key);
 
   // tokens
   const access_token = await accessToken(user);
