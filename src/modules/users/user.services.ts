@@ -127,3 +127,10 @@ export const validateToken = async (refreshToken: string) => {
 
   return access_token;
 };
+
+export const logout = async (userId: number) => {
+  //get redis connection
+  const redis = getRedis();
+  await redis.del(`user:${userId}:refreshToken`);
+  return true;
+};

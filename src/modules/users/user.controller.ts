@@ -83,3 +83,6 @@ export const refreshToken = asycHandler(async (req, res) => {
 
   res.status(200).json({ accessToken });
 });
+
+//logout
+export const logout = asycHandler(async (req, res) => {});
