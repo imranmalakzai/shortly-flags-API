@@ -75,3 +75,11 @@ export const deleteUser = asycHandler(async (req, res) => {
   if (result === 0) throw new ApiError("Internal server error", 500);
   res.status(200).json({ message: "Account deleted successfully" });
 });
+
+// refresh access token
+export const refreshToken = asycHandler(async (req, res) => {
+  const accessToken = await services.validateToken(req.body);
+  if (!accessToken) throw new ApiError("Internal server error", 500);
+
+  res.status(200).json({ accessToken });
+});
