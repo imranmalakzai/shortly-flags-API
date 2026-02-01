@@ -20,6 +20,9 @@ userRouter
   .route("/auth/refresh")
   .post(auth, validate(schema.refreshToken), users.refreshToken);
 
+//logout
+userRouter.route("/auth/logout").delete(auth, users.logout);
+
 // fetch all users
 userRouter.route("/users").get(auth, users.users);
 
