@@ -9,11 +9,11 @@ export const connectRedis = async () => {
   });
 
   redis.on("connect", () => {
-    console.log("✅ Redis connected");
+    console.log("Redis connected successfully");
   });
 
   redis.on("error", (err) => {
-    console.error("❌ Redis error:", err);
+    console.error("unable to connect with redis:", err);
   });
 
   await redis.connect();
