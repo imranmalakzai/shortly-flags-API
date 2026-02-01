@@ -33,3 +33,9 @@ export const password = z.object({
       .regex(/[0-9]/),
   }),
 });
+
+export const refreshToken = z.object({
+  body: z.object({
+    refreshToken: z.string("Refresh Token is required"),
+  }),
+});
