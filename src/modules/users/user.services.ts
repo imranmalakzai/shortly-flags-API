@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+import * as env from "../../config/env";
 import ApiError from "../../utils/apiError";
 import * as db from "./user.repository";
 import bcrypt from "bcrypt";
@@ -103,4 +105,25 @@ export const updateRole = async (
 ) => {
   const result = await db.updateuserRole(role, userId);
   return result;
+};
+
+export const validateToken = async (refreshToken: string) => {
+  const redis = getRedis();
+
+  if (!refreshToken) throw new ApiError("refreshToken not exist", 404);
+
+  const payload = jwt.verify(refreshToken, env.REFRESH_TOKEN_SECRET!) as {
+    id: number;
+    role: "admin" | "user" | "owner";
+  };
+
+  // stored token
+  const storedToken = await redis.get(`user:${payload.id!}:refreshToken`);
+  if (!storedToken || storedToken !== refreshToken) {
+    throw new ApiError("Invalid refresh token", 403);
+  }
+
+  const access_token = await accessToken(payload);
+
+  return access_token;
 };
