@@ -58,7 +58,11 @@ export const login = async (data: { email: string; password: string }) => {
   const access_token = await accessToken(user);
   const refresh_oken = await refreshToken(user);
 
-  //add redis later here!! to handle refreshToken
+  // add redis refresh token
+  await redis.set(`user:${user.id}:refreshToken`, refresh_oken, {
+    EX: 7 * 24 * 60 * 60,
+  });
+
   return { user, access_token, refresh_oken };
 };
 
