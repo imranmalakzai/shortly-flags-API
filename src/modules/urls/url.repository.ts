@@ -6,7 +6,7 @@ import { url } from "./url.type";
 export const create = async (data: url) => {
   const [result] = await pool.query<ResultSetHeader>(
     "INSERT INTO urls (user_id,original_url,short_code) VALUES (?,?,?)",
-    [data.user_id, data.original_url, data.short_code],
+    [data.user_id || null, data.original_url, data.short_code],
   );
   return result.insertId;
 };
