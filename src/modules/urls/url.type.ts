@@ -1,5 +1,5 @@
 export interface url {
-  user_id: number;
+  user_id?: number;
   original_url: string;
-  short_code: string;
+  // short_code: string;
 }
