@@ -2,6 +2,7 @@ import asycHandler from "../../utils/asyncHandler";
 import ApiError from "../../utils/apiError";
 import * as services from "./url.service";
 import { getRedis } from "../../infra/redis";
+import * as urlClick from "../urlClick/urlClick.service";
 
 //create short url
 export const create = asycHandler(async (req, res) => {
@@ -27,5 +28,12 @@ export const create = asycHandler(async (req, res) => {
 export const oringalUrl = asycHandler(async (req, res) => {
   const shortCode = req.params.shortCode;
   const originalUrl = await services.originalUrl(shortCode);
+
+  //create log in background not using awit here
+  const urlLog = urlClick.create({
+    ip_address: req.ip,
+    user_id: req.user.id,
+    user_agent: req.headers["user-agent"],
+  });
   res.redirect(originalUrl);
 });
