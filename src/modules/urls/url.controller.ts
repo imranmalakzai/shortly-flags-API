@@ -23,11 +23,24 @@ export const create = asycHandler(async (req, res) => {
 /**
  *  User type the short url on brower
  *  1: server resive the shortCode
- *  2: server check for the url in db if exist return the redirect the user to the oringal url
+ *  2: server check the redis cache first if original is missing
+ *     (1): server fetch origin url from db if not exist throw new Api error
+ *     (2): if exist set the url in redis cache for max time one day
+ *     (3): redirct request to the original url
+ *  3: if oringal url exist in cache redirect the request to the url
  */
-export const oringalUrl = asycHandler(async (req, res) => {
+export const oringalURL = asycHandler(async (req, res) => {
   const shortCode = req.params.shortCode;
+
+  const redis = getRedis();
+
+  // check redis
+  const cachedUrl = await redis.get(`short_code:${shortCode}`);
+  if (cachedUrl) return res.redirect(cachedUrl);
+
   const originalUrl = await services.originalUrl(shortCode);
+
+  await redis.set(`short_code:${shortCode}`, originalUrl, { EX: 24 * 60 * 60 }); // 1 day
 
   //create log in background not using awit here
   const urlLog = urlClick.create({
