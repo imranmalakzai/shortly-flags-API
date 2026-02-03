@@ -3,7 +3,10 @@ import * as db from "./url.repository";
 import crypto from "crypto";
 import { url } from "./url.type";
 
-export const create = async (data: url) => {
+export const create = async (data: {
+  user_id: number | null;
+  original_url: string;
+}) => {
   // in comming properties
   const original_url = data.original_url;
   const user_id = data.user_id;
