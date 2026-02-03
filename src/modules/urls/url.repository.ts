@@ -15,11 +15,20 @@ export const create = async (data: {
   return result.insertId;
 };
 
-//** get short url by origin url */
+//** Get short url by origin url */
 export const shortUrl = async (original_url: string) => {
   const [rows] = await pool.query<url[]>(
     "SELECT * FROM users WHERE original_url = ?",
     [original_url],
+  );
+  return rows[0];
+};
+
+//** Get oringial url by short url */
+export const originalUrl = async (shortCode: string) => {
+  const [rows] = await pool.query<url[]>(
+    "SELECT * FROM urls WHERE short_code = ?",
+    [shortCode],
   );
   return rows[0];
 };
