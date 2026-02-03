@@ -13,10 +13,19 @@ export const create = asycHandler(async (req, res) => {
     original_url: original_url,
   });
 
-  res
-    .status(200)
-    .json({
-      shortCode,
-      shortUrl: `${req.protocol}://${req.get("host")}/${shortCode}`,
-    });
+  res.status(200).json({
+    shortCode,
+    shortUrl: `${req.protocol}://${req.get("host")}/${shortCode}`,
+  });
+});
+
+/**
+ *  User type the short url on brower
+ *  1: server resive the shortCode
+ *  2: server check for the url in db if exist return the redirect the user to the oringal url
+ */
+export const oringalUrl = asycHandler(async (req, res) => {
+  const shortCode = req.params.shortCode;
+  const originalUrl = await services.originalUrl(shortCode);
+  res.redirect(originalUrl);
 });
