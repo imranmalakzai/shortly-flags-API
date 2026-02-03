@@ -45,7 +45,7 @@ export const oringalURL = asycHandler(async (req, res) => {
   //create log in background not using awit here
   const urlLog = urlClick.create({
     ip_address: req.ip,
-    user_id: req.user.id,
+    user_id: req.user.id || null,
     user_agent: req.headers["user-agent"],
   });
   res.redirect(originalUrl);
