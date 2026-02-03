@@ -34,7 +34,7 @@ export const create = async (data: {
   return shortUrl;
 };
 
-export const originalUrl = async (url: string) => {
+export const originalUrl = async (url: any) => {
   const result = await db.originalUrl(url);
   if (!result) throw new ApiError("Invalid url", 400);
   return result.original_url;
