@@ -33,3 +33,9 @@ export const create = async (data: {
   if (result === 0) throw new ApiError("Internal servicer error", 500);
   return shortUrl;
 };
+
+export const originalUrl = async (url: string) => {
+  const result = await db.originalUrl(url);
+  if (!result) throw new ApiError("Invalid url", 400);
+  return result.original_url;
+};
