@@ -8,7 +8,16 @@ export const create = async (data: url) => {
   const original_url = data.original_url;
   const user_id = data.user_id;
 
-  //genereate short url
+  /**
+   * Short.ly web site only store one short url per long url to save some disk storage
+   * here We check if short url exist in db
+   * 1 : if exist return that short url
+   * 2 : if not exist generate new  shoret url, store it in db and send short url to the user
+   */
+
+  const url = await db.shortUrl(original_url);
+  if (url) return url.short_code; // the bellow code is ignored if url exist
+
   const shortUrl = crypto.randomBytes(4).toString("hex");
 
   // short in db
