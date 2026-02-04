@@ -50,3 +50,10 @@ export const oringalURL = asycHandler(async (req, res) => {
   });
   res.redirect(originalUrl);
 });
+
+// Delete url (Admon only)
+export const deleteUrl = asycHandler(async (req, res) => {
+  const result = await services.remove(Number(req.params.urlId));
+  if (result === 0) throw new ApiError("Internal server error", 500);
+  return res.status(200).json({ message: "url delete successfully" });
+});
