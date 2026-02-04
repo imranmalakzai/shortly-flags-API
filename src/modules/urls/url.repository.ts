@@ -15,7 +15,7 @@ export const create = async (data: {
   return result.insertId;
 };
 
-//** Get short url by origin url */
+// Get short url by origin url
 export const shortUrl = async (original_url: string) => {
   const [rows] = await pool.query<url[]>(
     "SELECT * FROM users WHERE original_url = ?",
@@ -24,11 +24,20 @@ export const shortUrl = async (original_url: string) => {
   return rows[0];
 };
 
-//** Get oringial url by short url */
+// Get oringial url by short url
 export const originalUrl = async (shortCode: string) => {
   const [rows] = await pool.query<url[]>(
     "SELECT * FROM urls WHERE short_code = ?",
     [shortCode],
   );
   return rows[0];
+};
+
+// Remove url (Admin only)
+export const remove = async (urlId: number) => {
+  const [result] = await pool.query<ResultSetHeader>(
+    "DELETE FROM urls WHERE id = ?",
+    [urlId],
+  );
+  return result.affectedRows;
 };
