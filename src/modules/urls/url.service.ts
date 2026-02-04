@@ -39,3 +39,7 @@ export const originalUrl = async (url: any) => {
   if (!result) throw new ApiError("Invalid url", 400);
   return result.original_url;
 };
+
+export const remove = async (urlId: number) => {
+  return await db.remove(urlId);
+};
