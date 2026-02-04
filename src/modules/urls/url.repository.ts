@@ -41,3 +41,19 @@ export const remove = async (urlId: number) => {
   );
   return result.affectedRows;
 };
+
+// update url (Admon only)
+export const update = async (
+  data: {
+    user_id?: number | null;
+    original_url: string;
+    short_code: string;
+  },
+  urlId: number,
+) => {
+  const [result] = await pool.query<ResultSetHeader>(
+    "UPDATE urls SET user_id = ?, original_url = ? , short_url = ? WHERE id = ?",
+    [data.user_id || null, data.original_url, data.short_code, urlId],
+  );
+  return result.affectedRows;
+};
