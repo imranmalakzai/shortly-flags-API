@@ -12,4 +12,4 @@ urlRouter.route("/").post(softAuth, validate(schema.create), url.create);
 urlRouter.route("/:shortCode").get(softAuth, url.oringalURL);
 urlRouter.route("/urlId").delete(auth, validRole("admin"), url.deleteUrl);
 
-export default url;
+export default urlRouter;
