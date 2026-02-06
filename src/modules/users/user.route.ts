@@ -49,3 +49,5 @@ userRouter
 userRouter
   .route("/admin/users/:userId")
   .delete(auth, validRole("owner", "admin"), users.deleteUser);
+
+export default userRouter;
